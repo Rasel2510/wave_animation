@@ -1,7 +1,6 @@
 name: wave_animation
 description: A customizable wave animation widget for Flutter with null-safe options.
 version: 1.0.0
-publish_to: 'https://pub.dev'
 homepage: https://github.com/Rasel2510/wave_animation
 
 environment:
