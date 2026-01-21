@@ -2,9 +2,9 @@
 
 A customizable **wave animation widget** for Flutter with null-safe options. Create beautiful, animated waves with multiple layers, gradient colors, and motion patterns.
 
-![Wave Animation Demo 1](example/assets/wave_animation_1.gif)
+![Wave Animation Demo 1](example/assets/wave_animation_1.jpg)
 
-![Wave Animation Demo 2](example/assets/wave_animation_2.gif)
+![Wave Animation Demo 2](example/assets/wave_animation_2.jpg)
 
 
 ## Features
