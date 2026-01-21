@@ -1,0 +1,21 @@
+name: wave_animation
+description: A customizable wave animation widget for Flutter with null-safe options.
+version: 0.0.1
+publish_to: 'https://pub.dev' # change to 'https://pub.dev' when ready to publish
+ 
+homepage: https://github.com/yourgithub/wave_animation
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+
+flutter:
+  uses-material-design: true
