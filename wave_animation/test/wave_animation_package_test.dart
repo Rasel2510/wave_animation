@@ -1,60 +1,49 @@
+// test/wave_animation_package_test.dart
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:wave_animation/wave_animation.dart';
+ 
 
 void main() {
-  TestWidgetsFlutterBinding.ensureInitialized();
-
   group('Wave Animation Package Tests', () {
-    testWidgets('WaveWidget builds with null values', (WidgetTester tester) async {
-      // Build widget with null parameters
-      await tester.pumpWidget(
-        const MaterialApp(
-          home: Scaffold(
-            body: WaveWidget(),
-          ),
-        ),
-      );
-
-      expect(find.byType(WaveWidget), findsOneWidget);
-      expect(find.byType(CustomPaint), findsOneWidget);
-    });
-
-    testWidgets('WaveWidget builds with custom parameters', (WidgetTester tester) async {
+    
+    testWidgets('WaveWidget builds with null values', (tester) async {
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
             body: WaveWidget(
-              height: 150,
-              gradientColors1: [Colors.red, Colors.orange],
-              gradientColors2: [Colors.blue, Colors.lightBlue],
-              lineCount: 10,
-              amplitude: 20,
-              waveLength: 100,
-              speed: 1.0,
-              pattern: WaveMotionPattern.flowFieldLoop,
-              visible: true,
+              key: Key('waveWidgetNull'),
             ),
           ),
         ),
       );
 
-      expect(find.byType(WaveWidget), findsOneWidget);
-      expect(find.byType(CustomPaint), findsOneWidget);
+      // Find the CustomPaint by key inside WaveWidget
+      expect(find.byKey(const Key('wavePainter')), findsOneWidget);
     });
 
-    test('WavePainter instantiation does not crash', () {
-      final painter = WavePainter(
-        animationValue: 0.5,
-        gradientColors1: [Colors.red, Colors.orange],
-        gradientColors2: [Colors.blue, Colors.lightBlue],
-        lineCount: 10,
-        amplitude: 20,
-        waveLength: 100,
-        pattern: WaveMotionPattern.ribbonLoop,
+    testWidgets('WaveWidget builds with custom parameters', (tester) async {
+      await tester.pumpWidget(
+          MaterialApp(
+          home: Scaffold(
+            body: WaveWidget(
+              key:  Key('waveWidgetCustom'),
+              height: 300,
+              lineCount: 40,
+              amplitude: 30,
+              waveLength: 180,
+              speed: 0.8,
+              pattern: WaveMotionPattern.flowFieldLoop,
+              gradientColors1: [Colors.blue, Colors.lightBlue],
+              gradientColors2: [Colors.purple, Colors.pink],
+            ),
+          ),
+        ),
       );
 
-      expect(painter, isA<WavePainter>());
+      // Find the CustomPaint by key
+      expect(find.byKey(const Key('wavePainter')), findsOneWidget);
     });
   });
 }

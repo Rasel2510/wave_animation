@@ -39,7 +39,8 @@ class _WaveWidgetState extends State<WaveWidget>
   @override
   void initState() {
     super.initState();
-    final durationMs = ((4000 ~/ (widget.speed ?? 0.6)).clamp(1, 10000)).toInt();
+    final durationMs =
+        ((4000 ~/ (widget.speed ?? 0.6)).clamp(1, 10000)).toInt();
     _controller = AnimationController(
       vsync: this,
       duration: Duration(milliseconds: durationMs),
@@ -63,14 +64,17 @@ class _WaveWidgetState extends State<WaveWidget>
         animation: _controller,
         builder: (_, __) {
           return CustomPaint(
+            key: const Key('wavePainter'),
             painter: WavePainter(
               animationValue: _controller.value,
-              gradientColors1: widget.gradientColors1,
-              gradientColors2: widget.gradientColors2,
-              lineCount: widget.lineCount,
-              amplitude: widget.amplitude,
-              waveLength: widget.waveLength,
-              pattern: widget.pattern,
+              gradientColors1: widget.gradientColors1 ??
+                  [Colors.blue, Colors.lightBlueAccent],
+              gradientColors2:
+                  widget.gradientColors2 ?? [Colors.blueGrey, Colors.blue],
+              lineCount: widget.lineCount ?? 60,
+              amplitude: widget.amplitude ?? 28,
+              waveLength: widget.waveLength ?? 220,
+              pattern: widget.pattern ?? WaveMotionPattern.flowField,
             ),
           );
         },
