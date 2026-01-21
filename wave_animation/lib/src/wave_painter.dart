@@ -72,12 +72,14 @@ class WavePainter extends CustomPainter {
             break;
           case WaveMotionPattern.ribbonDrift:
           case WaveMotionPattern.flowField:
-          default:
             phase = loopPhase + basePhase;
             drift = 0;
         }
 
-        final y = centerY + verticalOffset + drift + localAmplitude * sin(normalizedX + phase);
+        final y = centerY +
+            verticalOffset +
+            drift +
+            localAmplitude * sin(normalizedX + phase);
 
         x == 0 ? path.moveTo(x, y) : path.lineTo(x, y);
       }
@@ -110,7 +112,10 @@ class WavePainter extends CustomPainter {
         final phase = -loopPhase * (0.5 + p) + basePhase;
         final drift = cos(loopPhase * 0.3 + normalizedX) * 6;
 
-        final y = centerY + verticalOffset + drift + localAmplitude * sin(normalizedX + phase);
+        final y = centerY +
+            verticalOffset +
+            drift +
+            localAmplitude * sin(normalizedX + phase);
 
         x == 0 ? path.moveTo(x, y) : path.lineTo(x, y);
       }
