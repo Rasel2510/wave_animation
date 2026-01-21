@@ -1,21 +1,29 @@
-# Wave Animation
+# wave_animation
 
-A customizable wave animation widget for Flutter.
+A customizable **wave animation widget** for Flutter with null-safe options. Create beautiful, animated waves with multiple layers, gradient colors, and motion patterns.
+
+![Wave Animation Demo 1](example/assets/wave_animation_1.gif)
+
+![Wave Animation Demo 2](example/assets/wave_animation_2.gif)
+
 
 ## Features
-- Multiple wave patterns
+
+- Multiple wave layers with customizable gradients
+- Control amplitude, wave length, and speed
+- Choose from 5 motion patterns:
+  - `classic`
+  - `flowField`
+  - `ribbonDrift`
+  - `flowFieldLoop`
+  - `ribbonLoop`
+- Visibility toggle
 - Fully null-safe
-- Customizable colors, amplitude, speed, height
 
-## Usage
+## Installation
 
-```dart
-import 'package:wave_animation/wave_animation.dart';
+Add this to your `pubspec.yaml`:
 
-WaveWidget(
-  height: 200,
-  gradientColors1: [Colors.blue, Colors.lightBlueAccent],
-  gradientColors2: [Colors.purple, Colors.pinkAccent],
-  speed: 0.8,
-  pattern: WaveMotionPattern.flowField,
-);
+```yaml
+dependencies:
+  wave_animation: ^1.0.1

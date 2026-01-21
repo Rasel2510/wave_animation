@@ -1,6 +1,7 @@
+// main.dart
 import 'package:flutter/material.dart';
 import 'package:wave_animation/wave_animation.dart';
-  
+
 void main() {
   runApp(const WaveExampleApp());
 }
@@ -14,13 +15,40 @@ class WaveExampleApp extends StatelessWidget {
       title: 'Wave Animation Example',
       home: Scaffold(
         appBar: AppBar(title: const Text('Wave Animation Example')),
-        body:   const Center(
+        body: Center(
           child: WaveWidget(
-            height: 200,
-            gradientColors1: [Colors.blue, Colors.lightBlueAccent],
-            gradientColors2: [Colors.purple, Colors.pinkAccent],
+            // height of the wave widget
+            height: 250,
+
+            // gradient colors for first wave layer
+            gradientColors1: [
+              Colors.blue.withAlpha(40),
+              Colors.lightBlueAccent.withAlpha(40),
+            ],
+
+            // gradient colors for second wave layer
+            gradientColors2: [
+              Colors.purple.withAlpha(50),
+              Colors.pinkAccent.withAlpha(50),
+            ],
+
+            // number of wave lines to draw
+            lineCount: 3,
+
+            // amplitude of the waves
+            amplitude: 20,
+
+            // wavelength of the waves
+            waveLength: 200,
+
+            // speed multiplier for wave animation
             speed: 0.8,
-            pattern: WaveMotionPattern.flowField,
+
+            // choose motion pattern
+            pattern: WaveMotionPattern.flowFieldLoop,
+
+            // visibility toggle
+            visible: true,
           ),
         ),
       ),
