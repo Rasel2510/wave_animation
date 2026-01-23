@@ -23,6 +23,13 @@ class WavePainter extends CustomPainter {
     this.waveLength,
   });
 
+  /// Helper to force fixed alpha (no withOpacity)
+  List<Color> _applyAlpha(List<Color> colors, int alpha) {
+    return colors
+        .map((c) => Color.fromARGB(alpha, c.red, c.green, c.blue))
+        .toList();
+  }
+
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
@@ -37,7 +44,7 @@ class WavePainter extends CustomPainter {
     final _pattern = pattern ?? WaveMotionPattern.flowField;
     final _animationValue = animationValue ?? 0.0;
 
-    final waveCount = (size.width / _waveLength).floor();
+    final waveCount = (size.width / _waveLength).floor().clamp(1, 999);
     final adjustedWaveLength = size.width / waveCount;
 
     final loopPhase = _animationValue * 2 * pi;
@@ -89,9 +96,10 @@ class WavePainter extends CustomPainter {
         ..shader = LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: (gradientColors1 ?? [Colors.blue, Colors.lightBlue])
-              .map((c) => c.withOpacity(0.12 + p * 0.35))
-              .toList(),
+          colors: _applyAlpha(
+            gradientColors1 ?? [Colors.blue, Colors.lightBlue],
+            45, // fixed alpha
+          ),
         ).createShader(Offset.zero & size);
 
       canvas.drawPath(path, paint);
@@ -125,9 +133,10 @@ class WavePainter extends CustomPainter {
         ..shader = LinearGradient(
           begin: Alignment.bottomLeft,
           end: Alignment.topRight,
-          colors: (gradientColors2 ?? [Colors.purple, Colors.pink])
-              .map((c) => c.withOpacity(0.10 + p * 0.3))
-              .toList(),
+          colors: _applyAlpha(
+            gradientColors2 ?? [Colors.purple, Colors.pink],
+            40, // fixed alpha
+          ),
         ).createShader(Offset.zero & size);
 
       canvas.drawPath(path, paint);
