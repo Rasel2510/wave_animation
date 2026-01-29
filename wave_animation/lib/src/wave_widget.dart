@@ -1,25 +1,72 @@
-// src/wave_widget.dart
-
 import 'package:flutter/material.dart';
 import 'wave_painter.dart';
 import 'motion_pattern.dart';
 
+/// A widget that displays animated waves with customizable colors and motion.
+///
+/// This widget creates a visually appealing wave animation with dual-layer
+/// gradients and multiple motion patterns. Perfect for backgrounds,
+/// decorative elements, or loading indicators.
+///
+/// Example:
+/// ```dart
+/// WaveWidget(
+///   height: 250,
+///   gradientColors1: [Colors.blue, Colors.lightBlue],
+///   gradientColors2: [Colors.purple, Colors.pink],
+///   pattern: WaveMotionPattern.flowFieldLoop,
+/// )
+/// ```
 class WaveWidget extends StatefulWidget {
-  final double? height;
-  final List<Color>? gradientColors1;
-  final List<Color>? gradientColors2;
+  /// The height of the wave widget.
+  final double height;
+
+  /// Gradient colors for the first wave layer.
+  final List<Color> gradientColors1;
+
+  /// Gradient colors for the second wave layer.
+  final List<Color> gradientColors2;
+
+  /// Number of wave lines to draw.
+  ///
+  /// More lines create a denser wave effect. Defaults to 3.
   final int? lineCount;
+
+  /// The amplitude (height) of the waves.
+  ///
+  /// Higher values create taller waves. Defaults to 20.0.
   final double? amplitude;
+
+  /// The wavelength (distance between wave peaks).
+  ///
+  /// Lower values create more compressed waves. Defaults to 200.0.
   final double? waveLength;
+
+  /// Animation speed multiplier.
+  ///
+  /// Higher values make the animation faster. Defaults to 1.0.
   final double? speed;
+
+  /// The motion pattern for the wave animation.
+  ///
+  /// Determines how the waves move and behave over time.
+  /// Defaults to [WaveMotionPattern.classic].
   final WaveMotionPattern? pattern;
+
+  /// Whether the wave animation is visible.
+  ///
+  /// When false, the widget will not be displayed. Defaults to true.
   final bool? visible;
 
+  /// Creates a [WaveWidget] with the specified parameters.
+  ///
+  /// The [height], [gradientColors1], and [gradientColors2] parameters are required.
+  /// All other parameters are optional and will use sensible defaults.
   const WaveWidget({
     super.key,
-    this.height,
-    this.gradientColors1,
-    this.gradientColors2,
+    required this.height,
+    required this.gradientColors1,
+    required this.gradientColors2,
     this.lineCount,
     this.amplitude,
     this.waveLength,
@@ -34,16 +81,16 @@ class WaveWidget extends StatefulWidget {
 
 class _WaveWidgetState extends State<WaveWidget>
     with SingleTickerProviderStateMixin {
-  late final AnimationController _controller;
+  late AnimationController _controller;
 
   @override
   void initState() {
     super.initState();
-    final durationMs =
-        ((4000 ~/ (widget.speed ?? 0.6)).clamp(1, 10000)).toInt();
     _controller = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: durationMs),
+      duration: Duration(
+        milliseconds: (10000 / (widget.speed ?? 1.0)).round(),
+      ),
     )..repeat();
   }
 
@@ -55,27 +102,26 @@ class _WaveWidgetState extends State<WaveWidget>
 
   @override
   Widget build(BuildContext context) {
-    if (widget.visible == false) return const SizedBox.shrink();
+    if (widget.visible == false) {
+      return const SizedBox.shrink();
+    }
 
     return SizedBox(
-      height: widget.height ?? 200,
-      width: double.infinity,
+      height: widget.height,
       child: AnimatedBuilder(
         animation: _controller,
-        builder: (_, __) {
+        builder: (context, child) {
           return CustomPaint(
-            key: const Key('wavePainter'),
             painter: WavePainter(
               animationValue: _controller.value,
-              gradientColors1: widget.gradientColors1 ??
-                  [Colors.blue, Colors.lightBlueAccent],
-              gradientColors2:
-                  widget.gradientColors2 ?? [Colors.blueGrey, Colors.blue],
-              lineCount: widget.lineCount ?? 60,
-              amplitude: widget.amplitude ?? 28,
-              waveLength: widget.waveLength ?? 220,
-              pattern: widget.pattern ?? WaveMotionPattern.flowField,
+              gradientColors1: widget.gradientColors1,
+              gradientColors2: widget.gradientColors2,
+              lineCount: widget.lineCount,
+              amplitude: widget.amplitude,
+              waveLength: widget.waveLength,
+              pattern: widget.pattern,
             ),
+            size: Size.infinite,
           );
         },
       ),

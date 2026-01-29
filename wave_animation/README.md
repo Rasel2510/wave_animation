@@ -23,7 +23,7 @@ A customizable **wave animation widget** for Flutter with null-safe options. Cre
 Add this to your `pubspec.yaml`:
 ```yaml
 dependencies:
-  wave_animation: ^1.0.3
+  wave_animation: ^1.0.4
 ```
 
 Then run:

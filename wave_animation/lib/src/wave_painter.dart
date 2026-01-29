@@ -4,15 +4,52 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'motion_pattern.dart';
 
+/// A custom painter that draws animated wave layers with gradient colors.
+///
+/// This painter creates multiple wave lines with customizable motion patterns,
+/// amplitudes, and colors. It supports two separate wave layers with different
+/// gradient colors for a layered visual effect.
 class WavePainter extends CustomPainter {
-  final double? animationValue; // 0 -> 1
+  /// The current animation value between 0.0 and 1.0.
+  ///
+  /// This value drives the wave motion and should be updated
+  /// continuously for smooth animation.
+  final double? animationValue;
+
+  /// Gradient colors for the first wave layer.
+  ///
+  /// Defaults to blue and light blue if not specified.
   final List<Color>? gradientColors1;
+
+  /// Gradient colors for the second wave layer.
+  ///
+  /// Defaults to purple and pink if not specified.
   final List<Color>? gradientColors2;
+
+  /// Number of wave lines to draw.
+  ///
+  /// More lines create a denser wave effect. Defaults to 60.
   final int? lineCount;
+
+  /// The amplitude (height) of the waves.
+  ///
+  /// Higher values create taller waves. Defaults to 28.
   final double? amplitude;
+
+  /// The wavelength (distance between wave peaks).
+  ///
+  /// Lower values create more compressed waves. Defaults to 220.
   final double? waveLength;
+
+  /// The motion pattern for the wave animation.
+  ///
+  /// Determines how the waves move and behave over time.
+  /// Defaults to [WaveMotionPattern.flowField].
   final WaveMotionPattern? pattern;
 
+  /// Creates a [WavePainter] with optional customization parameters.
+  ///
+  /// All parameters are optional and will use sensible defaults if not provided.
   WavePainter({
     this.animationValue,
     this.gradientColors1,
@@ -23,10 +60,18 @@ class WavePainter extends CustomPainter {
     this.waveLength,
   });
 
-  /// Helper to force fixed alpha (no withOpacity)
+  /// Helper to apply fixed alpha to a list of colors.
+  ///
+  /// Creates new colors with the specified [alpha] value while preserving
+  /// the original RGB values.
   List<Color> _applyAlpha(List<Color> colors, int alpha) {
     return colors
-        .map((c) => Color.fromARGB(alpha, c.red, c.green, c.blue))
+        .map((c) => Color.fromARGB(
+              alpha,
+              (c.r * 255.0).round().clamp(0, 255),
+              (c.g * 255.0).round().clamp(0, 255),
+              (c.b * 255.0).round().clamp(0, 255),
+            ))
         .toList();
   }
 
